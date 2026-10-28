@@ -4,10 +4,10 @@
   <tr>
     <td>
       <a href="https://github.com/Cesarkill">
-        <img height="170" src="https://github-readme-stats-sigma-five.vercel.app/api?username=Cesarkill&show_icons=true&theme=dracula&include_all_commits=true&count_private=true&hide_border=true&title_color=ff79c6"/>
+        <img height="170" src="https://raw.githubusercontent.com/Cesarkill/Cesarkill/output/stats.svg"/>
       </a>
       <a href="https://github.com/Cesarkill">
-        <img height="170" src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=Cesarkill&layout=compact&langs_count=8&theme=dracula&hide_border=true&title_color=ff79c6"/>
+        <img height="170" src="https://raw.githubusercontent.com/Cesarkill/Cesarkill/output/top-langs.svg"/>
       </a>
     </td>
   </tr>
