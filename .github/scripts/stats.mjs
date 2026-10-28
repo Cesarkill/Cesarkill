@@ -69,9 +69,11 @@ const [grade, pct] =
   score >= 1500 ? ["S", 100] : score >= 600 ? ["A++", 90] : score >= 300 ? ["A+", 78] :
   score >= 150 ? ["A", 65] : score >= 60 ? ["B+", 50] : ["B", 35];
 
+// linguagens geradas automaticamente pelo Flutter (pastas windows/linux/ios/android)
+const IGNORE = new Set(["CMake", "C++", "C", "Swift", "Kotlin", "Objective-C", "Ruby"]);
 const langs = {};
 for (const r of u.repositories.nodes)
-  for (const e of r.languages.edges) {
+  for (const e of r.languages.edges.filter((e) => !IGNORE.has(e.node.name))) {
     langs[e.node.name] ??= { size: 0, color: e.node.color || "#8be9fd" };
     langs[e.node.name].size += e.size;
   }
@@ -92,8 +94,8 @@ const font = "font-family=\"'Segoe UI', Ubuntu, Sans-Serif\"";
 const r = 40, circ = 2 * Math.PI * r;
 const statsSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="467" height="195" viewBox="0 0 467 195" ${font}>
   <style>
-    .row { opacity: 0; animation: fade .6s ease-in-out forwards; }
-    @keyframes fade { to { opacity: 1; } }
+    .row { animation: fade .6s ease-in-out backwards; }
+    @keyframes fade { from { opacity: 0; } }
     @keyframes ring { from { stroke-dashoffset: ${circ}; } }
   </style>
   <rect width="467" height="195" rx="6" fill="${C.bg}"/>
