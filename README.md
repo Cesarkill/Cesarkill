@@ -1,16 +1,14 @@
-## Olá me Chamo Cesar
+<h1 align="center">Olá, eu sou Cesar👋</h1>
 
-<!--
-**Cesarkill/Cesarkill** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Cesarkil&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="Status do GitHub" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Cesarkil&layout=compact&theme=tokyonight&hide_border=true" alt="Linguagens mais usadas" />
+</p>
 
-Here are some ideas to get you started:
+<p align="center">
+  <img src="https://streak-stats.demolab.com/?user=Cesarkil&theme=tokyonight&hide_border=true" alt="Sequência de contribuições" />
+</p>
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+<p align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=Cesarkil&theme=onedark&no-frame=true&row=1&column=6" alt="Troféus" />
+</p>
