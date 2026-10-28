@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="240" viewBox="0 0 220 240">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#2a3550"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#cfe8ff" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#cfe8ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cloak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b4560"/>
+      <stop offset="100%" stop-color="#1f2536"/>
+    </linearGradient>
+    <linearGradient id="mask" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#d9dde6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="220" height="240" rx="18" fill="url(#bg)"/>
+
+  <!-- floating soul particles -->
+  <g fill="#cfe8ff">
+    <circle cx="30" cy="200" r="2"><animate attributeName="cy" values="210;30" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="6s" repeatCount="indefinite"/></circle>
+    <circle cx="190" cy="200" r="1.6"><animate attributeName="cy" values="220;40" dur="7.5s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="7.5s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cx="60" cy="200" r="1.2"><animate attributeName="cy" values="230;60" dur="5s" begin="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.9;0" dur="5s" begin="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="160" cy="200" r="2.2"><animate attributeName="cy" values="230;20" dur="8s" begin="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="8s" begin="3s" repeatCount="indefinite"/></circle>
+    <circle cx="110" cy="200" r="1.4"><animate attributeName="cy" values="235;15" dur="9s" begin="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.8;0" dur="9s" begin="4s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- ground shadow -->
+  <ellipse cx="110" cy="214" rx="46" ry="6" fill="#000" opacity=".45">
+    <animate attributeName="rx" values="46;40;46" dur="2.4s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- knight (idle bob) -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -4;0 0" dur="2.4s" repeatCount="indefinite"/>
+
+    <ellipse cx="110" cy="105" rx="70" ry="70" fill="url(#glow)"/>
+
+    <!-- legs -->
+    <rect x="96" y="190" width="9" height="20" rx="3" fill="#161b28"/>
+    <rect x="115" y="190" width="9" height="20" rx="3" fill="#161b28"/>
+
+    <!-- nail -->
+    <g transform="rotate(18 150 160)">
+      <rect x="147" y="118" width="6" height="74" rx="2" fill="#c9ced8"/>
+      <rect x="148.5" y="120" width="1.5" height="68" fill="#ffffff" opacity=".7"/>
+      <rect x="141" y="188" width="18" height="5" rx="2" fill="#5b6378"/>
+      <rect x="147" y="192" width="6" height="12" rx="2" fill="#3a4152"/>
+    </g>
+
+    <!-- cloak -->
+    <path d="M82 128 Q70 160 66 196 Q88 186 110 198 Q132 186 154 196 Q150 160 138 128 Z" fill="url(#cloak)">
+      <animate attributeName="d" dur="2.4s" repeatCount="indefinite"
+        values="M82 128 Q70 160 66 196 Q88 186 110 198 Q132 186 154 196 Q150 160 138 128 Z;
+                M82 128 Q68 162 63 194 Q88 190 110 196 Q132 190 157 194 Q152 162 138 128 Z;
+                M82 128 Q70 160 66 196 Q88 186 110 198 Q132 186 154 196 Q150 160 138 128 Z"/>
+    </path>
+    <path d="M90 132 Q84 160 82 186" stroke="#4c5878" stroke-width="2" fill="none" opacity=".6"/>
+
+    <!-- horns -->
+    <path d="M86 84 Q74 60 80 30 Q84 50 96 70 Z" fill="url(#mask)"/>
+    <path d="M134 84 Q146 60 140 30 Q136 50 124 70 Z" fill="url(#mask)"/>
+
+    <!-- mask -->
+    <path d="M110 62 C140 62 150 86 148 106 C146 128 132 138 110 138 C88 138 74 128 72 106 C70 86 80 62 110 62 Z" fill="url(#mask)"/>
+
+    <!-- eyes (blink) -->
+    <g fill="#0b0d14">
+      <ellipse cx="96" cy="104" rx="9" ry="14">
+        <animate attributeName="ry" values="14;14;1;14;14" keyTimes="0;.92;.95;.98;1" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="124" cy="104" rx="9" ry="14">
+        <animate attributeName="ry" values="14;14;1;14;14" keyTimes="0;.92;.95;.98;1" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+  </g>
+</svg>
