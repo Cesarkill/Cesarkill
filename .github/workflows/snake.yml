@@ -1,4 +1,4 @@
-name: Generate Snake
+name: Generate Profile
 
 on:
   schedule:
@@ -26,6 +26,12 @@ jobs:
           GH_USER: ${{ github.repository_owner }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Update battle log
+        run: node .github/scripts/log.mjs README.md
+        env:
+          GH_USER: ${{ github.repository_owner }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
@@ -39,3 +45,12 @@ jobs:
           build_dir: dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # commits feitos com o GITHUB_TOKEN não disparam o workflow de novo, então não há loop
+      - name: Commit battle log
+        run: |
+          git diff --quiet README.md && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: atualiza diário de batalha"
+          git push
