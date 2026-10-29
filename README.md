@@ -42,7 +42,12 @@ Atualmente treinando na guilda [ecomap-devs](https://github.com/ecomap-devs) e s
 ### 🏰 Diário de batalha
 
 <!--LOG:START-->
-- 💤 O cavaleiro está descansando na taverna...
+- `28/10` ⚔️ Recrutou uma cópia de [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+- `25/10` 🏰 Fundou o reino [aula11_pdm_master_detail](https://github.com/Cesarkill/aula11_pdm_master_detail)
+- `25/10` 🏰 Fundou o reino [aula10_pdm_lista_api](https://github.com/Cesarkill/aula10_pdm_lista_api)
+- `22/10` 🗡️ Forjou commits em [exercicios](https://github.com/Cesarkill/exercicios)
+- `01/10` 🗡️ Forjou commits em [ecomap-devs/semestre-4-flutter](https://github.com/ecomap-devs/semestre-4-flutter)
+- `01/10` 🗡️ Forjou commits em [exercicios](https://github.com/Cesarkill/exercicios)
 <!--LOG:END-->
 
 ### 📯 Convoque o cavaleiro
