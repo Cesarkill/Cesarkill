@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="156" viewBox="0 0 350 156" font-family="'Segoe UI', Ubuntu, Sans-Serif">
+  <rect width="350" height="156" rx="6" fill="#282a36"/>
+  <text x="25" y="36" fill="#ff79c6" font-size="18" font-weight="600">Most Used Languages</text>
+  <clipPath id="b"><rect x="25" y="0" width="300" height="8" rx="4"/></clipPath>
+  <g transform="translate(0, 55)" clip-path="url(#b)"><rect x="25" y="0" width="158.07052871573833" height="8" fill="#00B4AB"/><rect x="183.07052871573833" y="0" width="70.14095757959028" height="8" fill="#4F5D95"/><rect x="253.2114862953286" y="0" width="41.70314034182629" height="8" fill="#e34c26"/><rect x="294.91462663715487" y="0" width="25.182645742149145" height="8" fill="#663399"/><rect x="320.097272379304" y="0" width="4.902727620695968" height="8" fill="#f1e05a"/></g>
+  
+  <g transform="translate(25, 92)">
+    <circle cx="5" cy="-4" r="5" fill="#00B4AB"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Dart 52.69%</text>
+  </g>
+  <g transform="translate(175, 92)">
+    <circle cx="5" cy="-4" r="5" fill="#4F5D95"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">PHP 23.38%</text>
+  </g>
+  <g transform="translate(25, 114)">
+    <circle cx="5" cy="-4" r="5" fill="#e34c26"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">HTML 13.90%</text>
+  </g>
+  <g transform="translate(175, 114)">
+    <circle cx="5" cy="-4" r="5" fill="#663399"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">CSS 8.39%</text>
+  </g>
+  <g transform="translate(25, 136)">
+    <circle cx="5" cy="-4" r="5" fill="#f1e05a"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">JavaScript 1.63%</text>
+  </g>
+</svg>
