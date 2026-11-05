@@ -59,11 +59,7 @@ Atualmente treinando na guilda [ecomap-devs](https://github.com/ecomap-devs) e s
   <a href="https://www.twitch.tv/cesargemida" target="_blank"><img src="https://img.shields.io/badge/Twitch-9146FF?style=for-the-badge&logo=twitch&logoColor=white"></a>
 </div>
 
-<!--
-  Para ativar, troque pelos links reais e mova para dentro do <div> acima.
-  <a href="https://www.youtube.com/@SEU-CANAL" target="_blank"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"></a>
-  <a href="https://discord.gg/SEU-CONVITE" target="_blank"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
--->
+
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Cesarkill/Cesarkill/output/github-contribution-grid-snake-dark.svg"/>
