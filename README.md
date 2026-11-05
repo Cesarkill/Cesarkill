@@ -1,6 +1,6 @@
 <img width="100%" src="./assets/header.svg" alt="Cesar Giacomino — Desenvolvedor Full-Stack"/>
 
-<img align="right" width="190" src="./assets/knight.svg" alt="Knight"/>
+<img align="right" width="190" src="./assets/knight.gif" alt="Knight"/>
 
 ### 🛡️ Sobre o cavaleiro
 
