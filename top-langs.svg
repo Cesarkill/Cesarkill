@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="156" viewBox="0 0 350 156" font-family="'Segoe UI', Ubuntu, Sans-Serif">
+  <rect width="350" height="156" rx="6" fill="#282a36"/>
+  <text x="25" y="36" fill="#ff79c6" font-size="18" font-weight="600">Most Used Languages</text>
+  <clipPath id="b"><rect x="25" y="0" width="300" height="8" rx="4"/></clipPath>
+  <g transform="translate(0, 55)" clip-path="url(#b)"><rect x="25" y="0" width="146.5538257394578" height="8" fill="#00B4AB"/><rect x="171.5538257394578" y="0" width="83.42796747465707" height="8" fill="#4F5D95"/><rect x="254.98179321411487" y="0" width="38.664732838561356" height="8" fill="#e34c26"/><rect x="293.6465260526762" y="0" width="23.347888475721714" height="8" fill="#663399"/><rect x="316.99441452839795" y="0" width="4.545524679452562" height="8" fill="#f1e05a"/><rect x="321.5399392078505" y="0" width="3.460060792149481" height="8" fill="#878787"/></g>
+  
+  <g transform="translate(25, 92)">
+    <circle cx="5" cy="-4" r="5" fill="#00B4AB"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Dart 48.85%</text>
+  </g>
+  <g transform="translate(175, 92)">
+    <circle cx="5" cy="-4" r="5" fill="#4F5D95"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">PHP 27.81%</text>
+  </g>
+  <g transform="translate(25, 114)">
+    <circle cx="5" cy="-4" r="5" fill="#e34c26"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">HTML 12.89%</text>
+  </g>
+  <g transform="translate(175, 114)">
+    <circle cx="5" cy="-4" r="5" fill="#663399"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">CSS 7.78%</text>
+  </g>
+  <g transform="translate(25, 136)">
+    <circle cx="5" cy="-4" r="5" fill="#f1e05a"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">JavaScript 1.52%</text>
+  </g>
+  <g transform="translate(175, 136)">
+    <circle cx="5" cy="-4" r="5" fill="#878787"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Hack 1.15%</text>
+  </g>
+</svg>
