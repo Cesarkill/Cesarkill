@@ -42,12 +42,12 @@ Atualmente treinando na guilda [ecomap-devs](https://github.com/ecomap-devs) e s
 ### 🏰 Diário de batalha
 
 <!--LOG:START-->
+- `17/11` 🏰 Fundou o reino [fatura-clara](https://github.com/Cesarkill/fatura-clara)
 - `12/11` 🗡️ Forjou commits em [exercicios](https://github.com/Cesarkill/exercicios)
 - `03/11` 🗡️ Forjou commits em [ecomap-devs/semestre-4-flutter](https://github.com/ecomap-devs/semestre-4-flutter)
 - `28/10` 🗡️ Forjou commits em [Cesarkill](https://github.com/Cesarkill/Cesarkill)
 - `28/10` 🏰 Fundou o reino [Cesarkill](https://github.com/Cesarkill/Cesarkill)
 - `28/10` 🗡️ Forjou commits em [Cesarkill](https://github.com/Cesarkill/Cesarkill)
-- `28/10` ⚔️ Recrutou uma cópia de [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
 <!--LOG:END-->
 
 ### 📯 Convoque o cavaleiro
