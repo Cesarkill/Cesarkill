@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="178" viewBox="0 0 350 178" font-family="'Segoe UI', Ubuntu, Sans-Serif">
+  <rect width="350" height="178" rx="6" fill="#282a36"/>
+  <text x="25" y="36" fill="#ff79c6" font-size="18" font-weight="600">Most Used Languages</text>
+  <clipPath id="b"><rect x="25" y="0" width="300" height="8" rx="4"/></clipPath>
+  <g transform="translate(0, 55)" clip-path="url(#b)"><rect x="25" y="0" width="113.95821309015354" height="8" fill="#f1e05a"/><rect x="138.95821309015355" y="0" width="52.52068182692678" height="8" fill="#3572A5"/><rect x="191.47889491708034" y="0" width="48.72984724306437" height="8" fill="#00B4AB"/><rect x="240.2087421601447" y="0" width="32.53992073569587" height="8" fill="#663399"/><rect x="272.7486628958406" y="0" width="27.740197775982146" height="8" fill="#4F5D95"/><rect x="300.48886067182275" y="0" width="22.985878640963485" height="8" fill="#e34c26"/><rect x="323.47473931278626" y="0" width="1.150486744391858" height="8" fill="#878787"/><rect x="324.6252260571781" y="0" width="0.37477394282196314" height="8" fill="#C1F12E"/></g>
+  
+  <g transform="translate(25, 92)">
+    <circle cx="5" cy="-4" r="5" fill="#f1e05a"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">JavaScript 37.99%</text>
+  </g>
+  <g transform="translate(175, 92)">
+    <circle cx="5" cy="-4" r="5" fill="#3572A5"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Python 17.51%</text>
+  </g>
+  <g transform="translate(25, 114)">
+    <circle cx="5" cy="-4" r="5" fill="#00B4AB"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Dart 16.24%</text>
+  </g>
+  <g transform="translate(175, 114)">
+    <circle cx="5" cy="-4" r="5" fill="#663399"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">CSS 10.85%</text>
+  </g>
+  <g transform="translate(25, 136)">
+    <circle cx="5" cy="-4" r="5" fill="#4F5D95"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">PHP 9.25%</text>
+  </g>
+  <g transform="translate(175, 136)">
+    <circle cx="5" cy="-4" r="5" fill="#e34c26"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">HTML 7.66%</text>
+  </g>
+  <g transform="translate(25, 158)">
+    <circle cx="5" cy="-4" r="5" fill="#878787"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Hack 0.38%</text>
+  </g>
+  <g transform="translate(175, 158)">
+    <circle cx="5" cy="-4" r="5" fill="#C1F12E"/>
+    <text x="16" y="0" fill="#f8f8f2" font-size="11" font-weight="400">Batchfile 0.12%</text>
+  </g>
+</svg>
