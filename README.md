@@ -42,7 +42,7 @@ Atualmente treinando na guilda [ecomap-devs](https://github.com/ecomap-devs) e s
 ### 🏰 Diário de batalha
 
 <!--LOG:START-->
-- `19/11` 🗡️ Forjou commits em [leitor-corte-laser-wkradar](https://github.com/Cesarkill/leitor-corte-laser-wkradar)
+- `20/11` 🗡️ Forjou commits em [leitor-corte-laser-wkradar](https://github.com/Cesarkill/leitor-corte-laser-wkradar)
 - `18/11` 🏰 Fundou o reino [leitor-corte-laser-wkradar](https://github.com/Cesarkill/leitor-corte-laser-wkradar)
 - `18/11` 🗡️ Forjou commits em [leitor-corte-laser-wkradar](https://github.com/Cesarkill/leitor-corte-laser-wkradar)
 - `17/11` 🗡️ Forjou commits em [fatura-clara](https://github.com/Cesarkill/fatura-clara)
