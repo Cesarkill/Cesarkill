@@ -20,24 +20,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Generate stats cards
-        run: node .github/scripts/stats.mjs dist
+      - name: Generate Singularity SVGs
+        run: node .github/scripts/singularity.mjs dist
         env:
           GH_USER: ${{ github.repository_owner }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update battle log
+      - name: Update flight log
         run: node .github/scripts/log.mjs README.md
         env:
           GH_USER: ${{ github.repository_owner }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: Platane/snk/svg-only@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/github-contribution-grid-snake.svg
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
       - uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
@@ -47,10 +40,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # commits feitos com o GITHUB_TOKEN não disparam o workflow de novo, então não há loop
-      - name: Commit battle log
+      - name: Commit flight log
         run: |
           git diff --quiet README.md && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
-          git commit -am "chore: atualiza diário de batalha"
+          git commit -am "chore: atualiza diário de voo"
           git push
