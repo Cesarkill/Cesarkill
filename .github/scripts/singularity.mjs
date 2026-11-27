@@ -349,6 +349,8 @@ function computeMetrics(profile) {
 const THEMES = {
   dark: {
     bg: "#04050c",
+    bgInner: "#070914",
+    bgOuter: "#020308",
     panelBg: "#070911",
     cardBg: "#0b0f1b",
     border: "#1a2234",
@@ -360,21 +362,28 @@ const THEMES = {
     hud: "#7dd3fc",
     radarFill: "#38bdf8",
     star: "#ffffff",
+    starWarm: "#ffe6be",
+    starCool: "#cfe6ff",
     shadow: "#000000",
     planet: "#05070e",
     diskLo: "#8b4c1c",
     diskMid: "#ffae4c",
     diskHi: "#fff3de",
+    diskRedshift: "#7c2d12",
+    diskBedAlpha: 0.92,
+    lensRingAlpha: 0.9,
     photon: "#ffe6be",
     haze: "#ff8f36",
-    hazeAlpha: 0.19,
-    lensAlpha: 0.85,
-    dopplerGlow: "#ffd498",
-    dopplerAlpha: 0.24,
+    hazeAlpha: 0.24,
+    lensAlpha: 0.9,
+    dopplerGlow: "#fff0d6",
+    dopplerAlpha: 0.34,
     spectrum: ["#7dd3fc", "#38bdf8", "#818cf8", "#fbbf24", "#94a3b8"],
   },
   light: {
     bg: "#f4f1ea",
+    bgInner: "#f7f4ed",
+    bgOuter: "#ebe6da",
     panelBg: "#f4f1ea",
     cardBg: "#eae5da",
     border: "#d0cabd",
@@ -386,17 +395,22 @@ const THEMES = {
     hud: "#0b5cad",
     radarFill: "#0b5cad",
     star: "#171a23",
+    starWarm: "#3b2f24",
+    starCool: "#1c2838",
     shadow: "#f4f1ea",
     planet: "#e3ded2",
     diskLo: "#a8a093",
     diskMid: "#474139",
     diskHi: "#0d0c0b",
+    diskRedshift: "#7a7266",
+    diskBedAlpha: 0.38,
+    lensRingAlpha: 0.45,
     photon: "#1a1714",
     haze: "#1a1d26",
     hazeAlpha: 0.08,
-    lensAlpha: 0.45,
+    lensAlpha: 0.48,
     dopplerGlow: "#181512",
-    dopplerAlpha: 0.09,
+    dopplerAlpha: 0.11,
     spectrum: ["#0b5cad", "#0284c7", "#4f46e5", "#b45309", "#475569"],
   },
 };
@@ -413,45 +427,80 @@ function buildHeroSvg(profile, metrics, themeName) {
   const cx = 600;
   const cy = 238;
   const Rs = 78;
-  const Rin = 104;
-  const Rout = 355;
+  const Rin = 92;
+  const Rout = 375;
   const TILT = -8;
-  const SQUASH = 0.21;
+  const SQUASH = 0.22;
 
   const rand = createRng(`hero:${profile.login}`);
   const loginUpper = profile.login.toUpperCase();
 
-  // Campo de estrelas com cintilação sutil em parte delas
+  // Helper para arcos de plasma no plano local do disco ou em coordenadas arbitrárias
+  const makeArcAt = (ox, oy, radius, angle, arcLen, width, color, opacity) => {
+    const x1 = r1(ox + Math.cos(angle) * radius);
+    const y1 = r1(oy + Math.sin(angle) * radius);
+    const x2 = r1(ox + Math.cos(angle + arcLen) * radius);
+    const y2 = r1(oy + Math.sin(angle + arcLen) * radius);
+    return `<path d="M${x1} ${y1}A${r1(radius)} ${r1(radius)} 0 0 1 ${x2} ${y2}" stroke="${color}" stroke-width="${r2(width)}" stroke-opacity="${r2(opacity)}" fill="none" stroke-linecap="round"/>`;
+  };
+  const makeArc = (radius, angle, arcLen, width, color, opacity) =>
+    makeArcAt(0, 0, radius, angle, arcLen, width, color, opacity);
+
+  // Campo estelar multi-temperatura com distorção gravitacional (arcos de Einstein) e difração
   let staticStars = "";
   let twinkleStars = "";
-  for (let i = 0; i < 200; i++) {
+  let lensedInner = "";
+  let lensedOuter = "";
+  let starFlares = "";
+  let flareCount = 0;
+
+  for (let i = 0; i < 225; i++) {
     const sx = r1(18 + rand() * (W - 36));
     const sy = r1(BAR + 8 + rand() * (H - BAR * 2 - 16));
-    const isBright = rand() > 0.9;
-    const sr = r2(isBright ? 1.15 + rand() * 0.85 : 0.4 + rand() * 0.75);
-    const op = r2(0.22 + rand() * 0.7);
-    if (i % 7 === 0) {
-      const delay = r2(rand() * 4.5);
-      const dur = r2(3.4 + rand() * 2.4);
-      twinkleStars += `<circle class="tw" style="animation-duration:${dur}s;animation-delay:${delay}s" cx="${sx}" cy="${sy}" r="${sr}" fill="${c.star}" opacity="${op}"/>`;
+    const dist = Math.hypot(sx - cx, sy - cy);
+    if (dist <= Rs + 22) continue;
+
+    const isBright = rand() > 0.89;
+    const sr = r2(isBright ? 1.2 + rand() * 0.9 : 0.4 + rand() * 0.78);
+    const op = r2(0.24 + rand() * 0.7);
+    const tintRoll = rand();
+    const starColor = tintRoll < 0.62 ? c.star : tintRoll < 0.82 ? c.starWarm : c.starCool;
+
+    if (dist <= Rs + 112) {
+      const ang = Math.atan2(sy - cy, sx - cx);
+      const arcLen = Math.min(0.28, 12 / (dist - Rs + 4));
+      const arcSvg = makeArc(dist, ang - arcLen / 2, arcLen, Math.max(0.75, sr * 0.95), starColor, Math.min(0.95, op * 0.95));
+      if (dist <= Rs + 66) {
+        lensedInner += arcSvg;
+      } else {
+        lensedOuter += arcSvg;
+      }
+      continue;
+    }
+
+    if (i % 6 === 0) {
+      const delay = r2(rand() * 4.8);
+      const dur = r2(2.8 + rand() * 2.8);
+      twinkleStars += `<circle class="tw" style="animation-duration:${dur}s;animation-delay:${delay}s" cx="${sx}" cy="${sy}" r="${sr}" fill="${starColor}" opacity="${op}"/>`;
     } else {
-      staticStars += `<circle cx="${sx}" cy="${sy}" r="${sr}" fill="${c.star}" opacity="${op}"/>`;
+      staticStars += `<circle cx="${sx}" cy="${sy}" r="${sr}" fill="${starColor}" opacity="${op}"/>`;
+    }
+
+    if (isBright && dist > 180 && flareCount < 7) {
+      flareCount += 1;
+      const arm = r1(4.2 + rand() * 2.8);
+      starFlares += `<path d="M${r1(sx - arm)} ${sy}L${r1(sx + arm)} ${sy}M${sx} ${r1(sy - arm)}L${sx} ${r1(sy + arm)}" stroke="${starColor}" stroke-width="0.7" stroke-opacity="${r2(op * 0.65)}"/>`;
     }
   }
 
-  // Helper para arcos de plasma no plano local do disco
-  const makeArc = (radius, angle, arcLen, width, color, opacity) => {
-    const x1 = r1(Math.cos(angle) * radius);
-    const y1 = r1(Math.sin(angle) * radius);
-    const x2 = r1(Math.cos(angle + arcLen) * radius);
-    const y2 = r1(Math.sin(angle + arcLen) * radius);
-    return `<path d="M${x1} ${y1}A${r1(radius)} ${r1(radius)} 0 0 1 ${x2} ${y2}" stroke="${color}" stroke-width="${r2(width)}" stroke-opacity="${r2(opacity)}" fill="none" stroke-linecap="round"/>`;
+  // 4 faixas keplerianas: 92..145, 145..215, 215..295, 295..375
+  const bands = ["", "", "", ""];
+  const bandIndexFor = (radius) => {
+    if (radius < 145) return 0;
+    if (radius < 215) return 1;
+    if (radius < 295) return 2;
+    return 3;
   };
-
-  // 3 faixas keplerianas: interna rápida, média intermediária, externa lenta
-  const bands = ["", "", ""];
-  const bandStep = (Rout - Rin) / 3;
-  const bandIndexFor = (radius) => Math.min(2, Math.max(0, Math.floor((radius - Rin) / bandStep)));
 
   const days = (profile.days || []).slice(-365);
   const peakDay = Math.max(1, ...days.map((d) => d.count));
@@ -459,42 +508,117 @@ function buildHeroSvg(profile, metrics, themeName) {
   // 365 partículas guiadas pelas contribuições diárias
   for (let i = 0; i < days.length; i++) {
     const count = days[i].count;
-    const intensity = count > 0 ? Math.min(1, Math.pow(count / peakDay, 0.65)) : 0;
-    // Dias mais intensos orbitam mais próximos do horizonte de eventos
+    const intensity = count > 0 ? Math.min(1, Math.pow(count / peakDay, 0.62)) : 0;
     const radialNorm = count > 0
-      ? Math.max(0.02, Math.min(0.95, 0.85 - intensity * 0.72 + (rand() - 0.5) * 0.28))
-      : 0.15 + rand() * 0.83;
+      ? Math.max(0.02, Math.min(0.95, 0.84 - intensity * 0.74 + (rand() - 0.5) * 0.25))
+      : 0.14 + rand() * 0.84;
     const radius = Rin + radialNorm * (Rout - Rin);
     const angle = (i / Math.max(1, days.length)) * Math.PI * 2 + (rand() - 0.5) * 0.35;
-    const arcLen = count > 0 ? 0.12 + intensity * 0.34 + rand() * 0.12 : 0.05 + rand() * 0.08;
-    const width = count > 0 ? 1.5 + intensity * 2.8 : 0.7 + rand() * 0.7;
-    const color = intensity > 0.55 ? c.diskHi : count > 0 ? c.diskMid : c.diskLo;
-    const opacity = count > 0 ? 0.38 + intensity * 0.58 : 0.14 + rand() * 0.18;
+    const arcLen = count > 0 ? 0.12 + intensity * 0.36 + rand() * 0.12 : 0.05 + rand() * 0.09;
+    const width = count > 0 ? 1.45 + intensity * 2.9 : 0.7 + rand() * 0.7;
+    const color = intensity > 0.52 ? c.diskHi : count > 0 ? c.diskMid : c.diskLo;
+    const opacity = count > 0 ? 0.42 + intensity * 0.55 : 0.14 + rand() * 0.18;
     bands[bandIndexFor(radius)] += makeArc(radius, angle, arcLen, width, color, opacity);
   }
 
-  // Poeira orbital complementar para dar volume contínuo ao disco
-  for (let i = 0; i < 255; i++) {
-    const t = Math.pow(rand(), 1.35);
+  // Poeira e filamentos orbitais contínuos
+  for (let i = 0; i < 235; i++) {
+    const t = Math.pow(rand(), 1.38);
     const radius = Rin + t * (Rout - Rin);
     const angle = rand() * Math.PI * 2;
-    const arcLen = 0.08 + rand() * 0.28;
-    const width = 0.7 + (1 - t) * 1.9 + rand() * 0.9;
-    const color = t < 0.26 ? c.diskHi : t < 0.68 ? c.diskMid : c.diskLo;
-    const opacity = 0.12 + (1 - t) * 0.34;
+    const arcLen = 0.09 + rand() * 0.3;
+    const width = 0.65 + (1 - t) * 2.0 + rand() * 0.85;
+    const color = t < 0.25 ? c.diskHi : t < 0.68 ? c.diskMid : c.diskLo;
+    const opacity = 0.14 + (1 - t) * 0.36;
     bands[bandIndexFor(radius)] += makeArc(radius, angle, arcLen, width, color, opacity);
+  }
+
+  // Centelhas brilhantes de plasma distribuídas nas faixas
+  for (let i = 0; i < 40; i++) {
+    const t = Math.pow(rand(), 1.5);
+    const radius = Rin + 4 + t * (Rout - Rin - 12);
+    const angle = rand() * Math.PI * 2;
+    const sx = r1(Math.cos(angle) * radius);
+    const sy = r1(Math.sin(angle) * radius);
+    const sr = r2(0.9 + (1 - t) * 1.25);
+    const op = r2(0.48 + (1 - t) * 0.48);
+    const sparkColor = t < 0.4 ? c.diskHi : c.diskMid;
+    bands[bandIndexFor(radius)] += `<circle cx="${sx}" cy="${sy}" r="${sr}" fill="${sparkColor}" opacity="${op}"/>`;
+  }
+
+  // 3 grupos de partículas espiralando para dentro do horizonte de eventos
+  const infalls = ["", "", ""];
+  for (let g = 0; g < 3; g++) {
+    for (let k = 0; k < 8; k++) {
+      const radius = 250 + rand() * 70;
+      const angle = (k / 8) * Math.PI * 2 + g * 0.72 + (rand() - 0.5) * 0.25;
+      const arcLen = 0.14 + rand() * 0.22;
+      const width = 1.1 + rand() * 1.4;
+      const color = k % 2 === 0 ? c.diskHi : c.diskMid;
+      infalls[g] += makeArc(radius, angle, arcLen, width, color, 0.78);
+      if (k % 3 === 0) {
+        const px = r1(Math.cos(angle + arcLen) * radius);
+        const py = r1(Math.sin(angle + arcLen) * radius);
+        infalls[g] += `<circle cx="${px}" cy="${py}" r="1.4" fill="${c.diskHi}" opacity="0.9"/>`;
+      }
+    }
+  }
+
+  // Filamentos curvos da cúpula de lente gravitacional (animados lentamente ao redor da sombra)
+  let lensArcs = "";
+  for (let i = 0; i < 34; i++) {
+    const radius = Rs + 5 + rand() * 24;
+    const angle = (i / 34) * Math.PI * 2 + (rand() - 0.5) * 0.2;
+    const arcLen = 0.22 + rand() * 0.35;
+    const width = 0.85 + rand() * 1.65;
+    const color = radius < Rs + 13 ? c.diskHi : c.diskMid;
+    const opacity = 0.28 + (1 - (radius - Rs - 5) / 24) * 0.45;
+    lensArcs += makeArc(radius, angle, arcLen, width, color, opacity);
   }
 
   const css = `
     .tw { animation: twinkle 4s ease-in-out infinite; }
     .halo { animation: haloPulse 6.5s ease-in-out infinite; }
-    .spin-0 { transform-origin: 0px 0px; animation: spin 20s linear infinite; }
-    .spin-1 { transform-origin: 0px 0px; animation: spin 36s linear infinite; }
-    .spin-2 { transform-origin: 0px 0px; animation: spin 60s linear infinite; }
+    .jets { animation: jetPulse 5.5s ease-in-out infinite; }
+    .anamorphic { animation: flareBreath 7s ease-in-out infinite; }
+    .lens-spin { transform-origin: 0px 0px; animation: spin 45s linear infinite; }
+    .orbit-halo-in { transform-origin: 0px 0px; animation: spin 30s linear infinite; }
+    .orbit-halo-out { transform-origin: 0px 0px; animation: spin 56s linear infinite; }
+    .spin-0 { transform-origin: 0px 0px; animation: spin 14s linear infinite; }
+    .spin-1 { transform-origin: 0px 0px; animation: spin 24s linear infinite; }
+    .spin-2 { transform-origin: 0px 0px; animation: spin 40s linear infinite; }
+    .spin-3 { transform-origin: 0px 0px; animation: spin 64s linear infinite; }
+    .infall-0 { transform-origin: 0px 0px; animation: spiralIn 10s ease-in 0s infinite; }
+    .infall-1 { transform-origin: 0px 0px; animation: spiralIn 10s ease-in -3.33s infinite; }
+    .infall-2 { transform-origin: 0px 0px; animation: spiralIn 10s ease-in -6.66s infinite; }
+    .meteor-1 { opacity: 0; animation: meteorA 11s linear 1.5s infinite; }
+    .meteor-2 { opacity: 0; animation: meteorB 17s linear -6s infinite; }
     .title-block { animation: rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) .15s backwards; }
-    @keyframes twinkle { 0%, 100% { opacity: .22; } 50% { opacity: .95; } }
+    @keyframes twinkle { 0%, 100% { opacity: .22; } 50% { opacity: .96; } }
     @keyframes haloPulse { 0%, 100% { opacity: ${r2(c.lensAlpha * 0.88)}; } 50% { opacity: ${r2(c.lensAlpha)}; } }
+    @keyframes jetPulse { 0%, 100% { opacity: .68; } 50% { opacity: 1; } }
+    @keyframes flareBreath { 0%, 100% { opacity: .78; } 50% { opacity: 1; } }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes spiralIn {
+      0% { opacity: 0; transform: rotate(0deg) scale(1.18); }
+      14% { opacity: .9; }
+      78% { opacity: .85; }
+      100% { opacity: 0; transform: rotate(255deg) scale(0.28); }
+    }
+    @keyframes meteorA {
+      0% { opacity: 0; transform: translate(60px, 68px); }
+      1.5% { opacity: .95; }
+      7.5% { opacity: .95; }
+      9% { opacity: 0; transform: translate(310px, 158px); }
+      100% { opacity: 0; transform: translate(310px, 158px); }
+    }
+    @keyframes meteorB {
+      0% { opacity: 0; transform: translate(1060px, 72px); }
+      1.5% { opacity: .9; }
+      7.5% { opacity: .9; }
+      9% { opacity: 0; transform: translate(790px, 178px); }
+      100% { opacity: 0; transform: translate(790px, 178px); }
+    }
     @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
     ${REDUCED_MOTION}
   `;
@@ -503,106 +627,278 @@ function buildHeroSvg(profile, metrics, themeName) {
     `${profile.name} (@${profile.login}): ${metrics.missionName}, ${fmt(metrics.total12m)} contribuições nos últimos 12 meses, ${fmt(metrics.activeDays)} dias ativos, maior sequência de ${metrics.longestStreak} dias.`
   );
 
+  const isDark = themeName === "dark";
+
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${aria}">
   <style>${css}</style>
   <defs>
     <clipPath id="frame-clip"><rect width="${W}" height="${H}" rx="14"/></clipPath>
-    <clipPath id="disk-back"><rect x="-430" y="-430" width="860" height="430"/></clipPath>
-    <clipPath id="disk-front"><rect x="-430" y="0" width="860" height="430"/></clipPath>
+    <clipPath id="disk-back"><rect x="-450" y="-450" width="900" height="450"/></clipPath>
+    <clipPath id="disk-front"><rect x="-450" y="0" width="900" height="450"/></clipPath>
 
-    <filter id="lens-blur" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="8"/>
+    <filter id="lens-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9"/>
     </filter>
     <filter id="photon-blur" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="3.2"/>
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+    <filter id="inner-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="jet-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <filter id="plasma-turb" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018 0.032" numOctaves="3" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="26" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="2.5"/>
     </filter>
 
+    <radialGradient id="space-vignette" cx="50%" cy="44%" r="72%">
+      <stop offset="0%" stop-color="${c.bgInner}"/>
+      <stop offset="100%" stop-color="${c.bgOuter}"/>
+    </radialGradient>
+
     <radialGradient id="ambient-haze" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="${c.haze}" stop-opacity="${r2(c.hazeAlpha * 1.4)}"/>
-      <stop offset="48%" stop-color="${c.haze}" stop-opacity="${r2(c.hazeAlpha * 0.6)}"/>
+      <stop offset="0%" stop-color="${c.haze}" stop-opacity="${r2(c.hazeAlpha * 1.45)}"/>
+      <stop offset="46%" stop-color="${c.haze}" stop-opacity="${r2(c.hazeAlpha * 0.65)}"/>
       <stop offset="100%" stop-color="${c.haze}" stop-opacity="0"/>
     </radialGradient>
 
-    <radialGradient id="doppler-boost" cx="35%" cy="50%" r="48%">
+    <radialGradient id="einstein-bloom" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="${c.diskHi}" stop-opacity="0"/>
+      <stop offset="50%" stop-color="${c.diskHi}" stop-opacity="0"/>
+      <stop offset="58%" stop-color="${c.diskHi}" stop-opacity="${r2(c.lensRingAlpha * 0.72)}"/>
+      <stop offset="72%" stop-color="${c.diskMid}" stop-opacity="${r2(c.lensRingAlpha * 0.42)}"/>
+      <stop offset="86%" stop-color="${c.haze}" stop-opacity="${r2(c.lensRingAlpha * 0.14)}"/>
+      <stop offset="100%" stop-color="${c.diskLo}" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="plasma-bed-grad" cx="0" cy="0" r="${Rout}" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${c.diskHi}" stop-opacity="0"/>
+      <stop offset="22.4%" stop-color="${c.diskHi}" stop-opacity="0"/>
+      <stop offset="25.5%" stop-color="${c.diskHi}" stop-opacity="${c.diskBedAlpha}"/>
+      <stop offset="31.5%" stop-color="${c.diskHi}" stop-opacity="${r2(c.diskBedAlpha * 0.85)}"/>
+      <stop offset="54.5%" stop-color="${c.diskMid}" stop-opacity="${r2(c.diskBedAlpha * 0.56)}"/>
+      <stop offset="78.5%" stop-color="${c.haze}" stop-opacity="${r2(c.diskBedAlpha * 0.24)}"/>
+      <stop offset="100%" stop-color="${c.diskLo}" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="doppler-boost" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="${c.dopplerGlow}" stop-opacity="${c.dopplerAlpha}"/>
-      <stop offset="65%" stop-color="${c.diskMid}" stop-opacity="${r2(c.dopplerAlpha * 0.35)}"/>
+      <stop offset="58%" stop-color="${c.diskMid}" stop-opacity="${r2(c.dopplerAlpha * 0.4)}"/>
       <stop offset="100%" stop-color="${c.diskMid}" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="doppler-redshift" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="${c.diskRedshift}" stop-opacity="${isDark ? 0.28 : 0.08}"/>
+      <stop offset="70%" stop-color="${c.diskRedshift}" stop-opacity="${isDark ? 0.1 : 0.03}"/>
+      <stop offset="100%" stop-color="${c.diskRedshift}" stop-opacity="0"/>
     </radialGradient>
 
     <linearGradient id="doppler-grad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="38%" stop-color="#f2f2f2"/>
-      <stop offset="62%" stop-color="#9e9e9e"/>
+      <stop offset="35%" stop-color="#f5f5f5"/>
+      <stop offset="60%" stop-color="#949494"/>
       <stop offset="100%" stop-color="#5c5c5c"/>
     </linearGradient>
 
     <linearGradient id="lens-upper-grad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="${c.diskLo}" stop-opacity="0"/>
-      <stop offset="22%" stop-color="${c.diskMid}" stop-opacity="0.85"/>
-      <stop offset="45%" stop-color="${c.diskHi}" stop-opacity="0.98"/>
+      <stop offset="20%" stop-color="${c.diskMid}" stop-opacity="0.88"/>
+      <stop offset="44%" stop-color="${c.diskHi}" stop-opacity="1"/>
       <stop offset="78%" stop-color="${c.diskMid}" stop-opacity="0.72"/>
       <stop offset="100%" stop-color="${c.diskLo}" stop-opacity="0"/>
     </linearGradient>
 
     <linearGradient id="lens-lower-grad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="${c.diskLo}" stop-opacity="0"/>
-      <stop offset="28%" stop-color="${c.diskMid}" stop-opacity="0.62"/>
-      <stop offset="50%" stop-color="${c.diskHi}" stop-opacity="0.78"/>
-      <stop offset="76%" stop-color="${c.diskMid}" stop-opacity="0.48"/>
+      <stop offset="26%" stop-color="${c.diskMid}" stop-opacity="0.68"/>
+      <stop offset="48%" stop-color="${c.diskHi}" stop-opacity="0.86"/>
+      <stop offset="76%" stop-color="${c.diskMid}" stop-opacity="0.5"/>
       <stop offset="100%" stop-color="${c.diskLo}" stop-opacity="0"/>
     </linearGradient>
 
-    <mask id="doppler-mask" maskUnits="userSpaceOnUse" x="-430" y="-430" width="860" height="860">
-      <rect x="-430" y="-430" width="860" height="860" fill="url(#doppler-grad)"/>
+    <linearGradient id="lens-dome-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="36%" stop-color="#dcdcdc"/>
+      <stop offset="50%" stop-color="#2b2b2b"/>
+      <stop offset="66%" stop-color="#a8a8a8"/>
+      <stop offset="100%" stop-color="#cfcfcf"/>
+    </linearGradient>
+
+    <linearGradient id="jet-north-grad" x1="0" y1="-76" x2="0" y2="-212" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${c.diskHi}" stop-opacity="${isDark ? 0.25 : 0.08}"/>
+      <stop offset="35%" stop-color="${c.hud}" stop-opacity="${isDark ? 0.16 : 0.05}"/>
+      <stop offset="100%" stop-color="${c.hud}" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="jet-south-grad" x1="0" y1="76" x2="0" y2="198" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${c.diskHi}" stop-opacity="${isDark ? 0.22 : 0.07}"/>
+      <stop offset="35%" stop-color="${c.hud}" stop-opacity="${isDark ? 0.14 : 0.04}"/>
+      <stop offset="100%" stop-color="${c.hud}" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="jet-north-core" x1="0" y1="-76" x2="0" y2="-204" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${c.diskHi}" stop-opacity="${isDark ? 0.36 : 0.12}"/>
+      <stop offset="100%" stop-color="${c.hud}" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="jet-south-core" x1="0" y1="76" x2="0" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${c.diskHi}" stop-opacity="${isDark ? 0.3 : 0.1}"/>
+      <stop offset="100%" stop-color="${c.hud}" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="anamorphic-cool" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="${c.hud}" stop-opacity="0"/>
+      <stop offset="28%" stop-color="${c.hud}" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="${c.diskHi}" stop-opacity="0.95"/>
+      <stop offset="72%" stop-color="${c.hud}" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="${c.hud}" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="anamorphic-hot" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="${c.diskMid}" stop-opacity="0"/>
+      <stop offset="30%" stop-color="${c.diskMid}" stop-opacity="0.65"/>
+      <stop offset="50%" stop-color="${c.diskHi}" stop-opacity="1"/>
+      <stop offset="70%" stop-color="${c.diskMid}" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="${c.diskMid}" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="meteor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${c.hud}" stop-opacity="0"/>
+      <stop offset="65%" stop-color="${c.starCool}" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="${c.star}" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="meteor-grad-r" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="${c.diskMid}" stop-opacity="0"/>
+      <stop offset="65%" stop-color="${c.starWarm}" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="${c.star}" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <mask id="doppler-mask" maskUnits="userSpaceOnUse" x="-450" y="-450" width="900" height="900">
+      <rect x="-450" y="-450" width="900" height="900" fill="url(#doppler-grad)"/>
+      <circle cx="0" cy="0" r="86" fill="#000000" filter="url(#inner-glow)"/>
     </mask>
+
+    <mask id="lens-annulus-mask" maskUnits="userSpaceOnUse" x="-150" y="-150" width="300" height="300">
+      <rect x="-150" y="-150" width="300" height="300" fill="url(#lens-dome-grad)"/>
+      <circle cx="0" cy="0" r="${Rs + 2}" fill="#000000"/>
+    </mask>
+
+    <g id="disk-glow-bed">
+      <circle cx="0" cy="0" r="${Rout}" fill="url(#plasma-bed-grad)"/>
+      <circle cx="0" cy="0" r="145" fill="none" stroke="${c.diskMid}" stroke-width="26" stroke-opacity="${isDark ? 0.34 : 0.14}" filter="url(#plasma-turb)"/>
+      <circle cx="0" cy="0" r="225" fill="none" stroke="${c.haze}" stroke-width="34" stroke-opacity="${isDark ? 0.22 : 0.08}" filter="url(#plasma-turb)"/>
+      <circle cx="0" cy="0" r="112" fill="none" stroke="${c.diskHi}" stroke-width="2.2" stroke-opacity="${isDark ? 0.32 : 0.16}"/>
+      <circle cx="0" cy="0" r="168" fill="none" stroke="${c.diskMid}" stroke-width="2" stroke-opacity="${isDark ? 0.24 : 0.12}"/>
+      <circle cx="0" cy="0" r="248" fill="none" stroke="${c.diskLo}" stroke-width="1.8" stroke-opacity="${isDark ? 0.2 : 0.1}"/>
+    </g>
 
     <g id="band-0">${bands[0]}</g>
     <g id="band-1">${bands[1]}</g>
     <g id="band-2">${bands[2]}</g>
+    <g id="band-3">${bands[3]}</g>
+    <g id="infall-0">${infalls[0]}</g>
+    <g id="infall-1">${infalls[1]}</g>
+    <g id="infall-2">${infalls[2]}</g>
   </defs>
 
   <g clip-path="url(#frame-clip)">
-    <rect width="${W}" height="${H}" fill="${c.bg}"/>
+    <rect width="${W}" height="${H}" fill="url(#space-vignette)"/>
 
-    <!-- Campo estelar -->
-    <g>${staticStars}${twinkleStars}</g>
+    <!-- Campo estelar multi-temperatura com distorção gravitacional giratória e estrelas cadentes -->
+    <g>${staticStars}${twinkleStars}${starFlares}</g>
+    <g transform="translate(${cx}, ${cy})">
+      <g class="orbit-halo-out">${lensedOuter}</g>
+      <g class="orbit-halo-in">${lensedInner}</g>
+    </g>
+    <g class="meteor-1">
+      <line x1="0" y1="0" x2="95" y2="34" stroke="url(#meteor-grad)" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="95" cy="34" r="1.4" fill="${c.star}"/>
+    </g>
+    <g class="meteor-2">
+      <line x1="0" y1="0" x2="-92" y2="36" stroke="url(#meteor-grad-r)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="-92" cy="36" r="1.4" fill="${c.star}"/>
+    </g>
 
-    <!-- Brilho ambiente gravitacional -->
-    <ellipse cx="${cx}" cy="${cy}" rx="410" ry="125" fill="url(#ambient-haze)" transform="rotate(${TILT} ${cx} ${cy})"/>
+    <!-- Brilho ambiente gravitacional e nuvem turbulenta estática -->
+    <ellipse cx="${cx}" cy="${cy}" rx="470" ry="135" fill="url(#ambient-haze)" transform="rotate(${TILT} ${cx} ${cy})"/>
+    <g transform="translate(${cx}, ${cy}) rotate(${TILT})">
+      <circle cx="0" cy="-2" r="98" fill="none" stroke="${c.diskMid}" stroke-width="14" stroke-opacity="${isDark ? 0.26 : 0.1}" filter="url(#plasma-turb)"/>
+    </g>
 
-    <!-- Lente gravitacional superior e inferior (luz dobrada ao redor da sombra) -->
+    <!-- Jatos relativísticos sutis (modo Quasar) -->
+    <g class="jets" transform="translate(${cx}, ${cy}) rotate(${TILT})">
+      <polygon points="-16,-76 -3,-212 3,-212 16,-76" fill="url(#jet-north-grad)" filter="url(#jet-blur)"/>
+      <line x1="0" y1="-76" x2="0" y2="-204" stroke="url(#jet-north-core)" stroke-width="1.4"/>
+      <polygon points="-16,76 -3,198 3,198 16,76" fill="url(#jet-south-grad)" filter="url(#jet-blur)"/>
+      <line x1="0" y1="76" x2="0" y2="190" stroke="url(#jet-south-core)" stroke-width="1.4"/>
+    </g>
+
+    <!-- Cúpula de lente gravitacional (anel de Einstein + filamentos em órbita) -->
     <g class="halo" transform="translate(${cx}, ${cy}) rotate(${TILT})">
-      <path d="M -134 -6 C -116 -144, 116 -144, 134 -6" fill="none" stroke="url(#lens-upper-grad)" stroke-width="18" filter="url(#lens-blur)" opacity="0.84"/>
-      <path d="M -114 -4 C -98 -126, 98 -126, 114 -4" fill="none" stroke="url(#lens-upper-grad)" stroke-width="5.5" opacity="0.94"/>
-      <path d="M -86 0 A 86 86 0 0 1 86 0" fill="none" stroke="${c.diskHi}" stroke-width="2" opacity="0.9"/>
+      <ellipse cx="0" cy="-6" rx="144" ry="152" fill="url(#einstein-bloom)"/>
+      <g mask="url(#lens-annulus-mask)">
+        <g class="lens-spin">${lensArcs}</g>
+      </g>
+      <path d="M -140 -6 C -122 -148, 122 -148, 140 -6" fill="none" stroke="url(#lens-upper-grad)" stroke-width="19" filter="url(#lens-blur)" opacity="0.85"/>
+      <path d="M -116 -4 C -100 -128, 100 -128, 116 -4" fill="none" stroke="url(#lens-upper-grad)" stroke-width="5.5" opacity="0.95"/>
+      <path d="M -86 0 A 86 86 0 0 1 86 0" fill="none" stroke="${c.diskHi}" stroke-width="2.1" opacity="0.92"/>
 
-      <path d="M -112 6 C -94 122, 94 122, 112 6" fill="none" stroke="url(#lens-lower-grad)" stroke-width="11" filter="url(#lens-blur)" opacity="0.68"/>
-      <path d="M -85 2 A 85 85 0 0 0 85 2" fill="none" stroke="url(#lens-lower-grad)" stroke-width="2.5" opacity="0.8"/>
+      <path d="M -116 6 C -98 124, 98 124, 116 6" fill="none" stroke="url(#lens-lower-grad)" stroke-width="12" filter="url(#lens-blur)" opacity="0.7"/>
+      <path d="M -85 2 A 85 85 0 0 0 85 2" fill="none" stroke="url(#lens-lower-grad)" stroke-width="2.6" opacity="0.82"/>
     </g>
 
     <!-- Metade traseira do disco de acreção (atrás do horizonte de eventos) -->
     <g transform="translate(${cx}, ${cy}) rotate(${TILT}) scale(1, ${SQUASH})">
       <g clip-path="url(#disk-back)" mask="url(#doppler-mask)">
+        <use href="#disk-glow-bed" xlink:href="#disk-glow-bed"/>
+        <g class="infall-0"><use href="#infall-0" xlink:href="#infall-0"/></g>
+        <g class="infall-1"><use href="#infall-1" xlink:href="#infall-1"/></g>
+        <g class="infall-2"><use href="#infall-2" xlink:href="#infall-2"/></g>
+        <g class="spin-3"><use href="#band-3" xlink:href="#band-3"/></g>
         <g class="spin-2"><use href="#band-2" xlink:href="#band-2"/></g>
         <g class="spin-1"><use href="#band-1" xlink:href="#band-1"/></g>
-        <g class="spin-0"><use href="#band-0" xlink:href="#band-0"/></g>
+        <g class="spin-0">
+          <use href="#band-0" xlink:href="#band-0" filter="url(#inner-glow)" opacity="0.55"/>
+          <use href="#band-0" xlink:href="#band-0"/>
+        </g>
       </g>
     </g>
 
-    <!-- Horizonte de eventos + anel de fótons -->
-    <circle cx="${cx}" cy="${cy}" r="${Rs + 2}" fill="none" stroke="${c.photon}" stroke-width="4" stroke-opacity="0.45" filter="url(#photon-blur)"/>
+    <!-- Horizonte de eventos + duplo anel de fótons -->
+    <circle cx="${cx}" cy="${cy}" r="${Rs + 2.5}" fill="none" stroke="${c.photon}" stroke-width="5" stroke-opacity="0.58" filter="url(#photon-blur)"/>
     <circle cx="${cx}" cy="${cy}" r="${Rs}" fill="${c.shadow}"/>
-    <circle cx="${cx}" cy="${cy}" r="${Rs + 0.8}" fill="none" stroke="${c.diskHi}" stroke-width="1.35" stroke-opacity="0.9"/>
+    <circle cx="${cx}" cy="${cy}" r="${Rs + 0.8}" fill="none" stroke="${c.diskHi}" stroke-width="1.5" stroke-opacity="0.96"/>
 
-    <!-- Metade frontal do disco de acreção (na frente do horizonte de eventos) -->
+    <!-- Metade frontal do disco de acreção (cruzando à frente do horizonte de eventos) -->
     <g transform="translate(${cx}, ${cy}) rotate(${TILT}) scale(1, ${SQUASH})">
       <g clip-path="url(#disk-front)" mask="url(#doppler-mask)">
-        <ellipse cx="-65" cy="40" rx="285" ry="260" fill="url(#doppler-boost)"/>
+        <use href="#disk-glow-bed" xlink:href="#disk-glow-bed"/>
+        <ellipse cx="-95" cy="18" rx="285" ry="260" fill="url(#doppler-boost)"/>
+        <ellipse cx="165" cy="10" rx="220" ry="220" fill="url(#doppler-redshift)"/>
+        <g class="infall-0"><use href="#infall-0" xlink:href="#infall-0"/></g>
+        <g class="infall-1"><use href="#infall-1" xlink:href="#infall-1"/></g>
+        <g class="infall-2"><use href="#infall-2" xlink:href="#infall-2"/></g>
+        <g class="spin-3"><use href="#band-3" xlink:href="#band-3"/></g>
         <g class="spin-2"><use href="#band-2" xlink:href="#band-2"/></g>
         <g class="spin-1"><use href="#band-1" xlink:href="#band-1"/></g>
-        <g class="spin-0"><use href="#band-0" xlink:href="#band-0"/></g>
-        <path d="M -104 4 A 104 104 0 0 0 104 4" fill="none" stroke="${c.diskHi}" stroke-width="3.2" stroke-opacity="0.58"/>
+        <g class="spin-0">
+          <use href="#band-0" xlink:href="#band-0" filter="url(#inner-glow)" opacity="0.55"/>
+          <use href="#band-0" xlink:href="#band-0"/>
+        </g>
+        <path d="M -96 4 A 96 96 0 0 0 96 4" fill="none" stroke="${c.diskHi}" stroke-width="3.4" stroke-opacity="0.72"/>
+        <path d="M -108 6 A 108 108 0 0 0 108 6" fill="none" stroke="${c.diskMid}" stroke-width="2.2" stroke-opacity="0.48"/>
       </g>
+    </g>
+
+    <!-- Lens flare anamórfico cinematográfico no limbo Doppler esquerdo -->
+    <g class="anamorphic">
+      <rect x="130" y="246.9" width="750" height="2.2" fill="url(#anamorphic-cool)" opacity="${isDark ? 0.26 : 0.06}" filter="url(#inner-glow)"/>
+      <rect x="340" y="247.3" width="330" height="1.4" fill="url(#anamorphic-hot)" opacity="${isDark ? 0.72 : 0.18}"/>
+      <ellipse cx="502" cy="248" rx="44" ry="5" fill="${c.diskHi}" opacity="${isDark ? 0.18 : 0.05}" filter="url(#inner-glow)"/>
     </g>
 
     <!-- Bloco de identidade -->
