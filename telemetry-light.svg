@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-label="Telemetria da missão HORIZONTE II: 2 anos no GitHub, 117 contribuições em 12 meses, 31 dias ativos, maior sequência de 4 dias, 11 repositórios, 69 commits totais.">
+  <style>
+    .orbit-path { stroke-dasharray: 473; animation: drawOrbit 1.8s cubic-bezier(0.16, 1, 0.3, 1) .15s backwards; }
+    .orbit-fill { animation: fadeIn 1.4s ease-out .4s backwards; }
+    .beacon-ping { transform-origin: 0px 0px; animation: beaconPing 2.4s ease-out infinite; }
+    .card-in { animation: rise .9s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+    .spec-bar { transform-origin: 470px 363px; animation: growBar 1.3s cubic-bezier(0.16, 1, 0.3, 1) .35s backwards; }
+    .scan { animation: scanSweep 2.6s cubic-bezier(0.16, 1, 0.3, 1) .15s forwards; }
+    @keyframes drawOrbit { from { stroke-dashoffset: 473; } to { stroke-dashoffset: 0; } }
+    @keyframes fadeIn { from { opacity: 0; } }
+    @keyframes beaconPing { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(3.1); } }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+    @keyframes growBar { from { transform: scaleX(0); } }
+    @keyframes scanSweep { 0% { opacity: .85; transform: translateX(0); } 80% { opacity: .45; } 100% { opacity: 0; transform: translateX(1170px); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+  <defs>
+    <clipPath id="tel-frame"><rect width="1200" height="440" rx="14"/></clipPath>
+    <clipPath id="spec-clip"><rect x="470" y="358" width="686" height="10" rx="5"/></clipPath>
+    <linearGradient id="scan-trail" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0b5cad" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0b5cad" stop-opacity="0.28"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#tel-frame)">
+    <rect width="1200" height="440" fill="#f4f1ea"/>
+    <path d="M14 34V14H34M1166 14H1186V34M14 406V426H34M1166 426H1186V406" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.85"/>
+
+    <!-- Cabeçalho do painel -->
+    <text x="38" y="46" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" letter-spacing="3" fill="#0b5cad">TELEMETRIA DA MISSÃO</text>
+    <text x="1162" y="46" text-anchor="end" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" letter-spacing="2" fill="#575e70">HORIZONTE II · @CESARKILL</text>
+    <line x1="38" y1="62" x2="1162" y2="62" stroke="#d0cabd"/>
+
+    <!-- Radar orbital -->
+    <circle cx="235" cy="240" r="27" fill="none" stroke="#d0cabd" stroke-dasharray="3 4"/><circle cx="235" cy="240" r="54" fill="none" stroke="#d0cabd" stroke-dasharray="3 4"/><circle cx="235" cy="240" r="81" fill="none" stroke="#d0cabd" stroke-dasharray="3 4"/><circle cx="235" cy="240" r="108" fill="none" stroke="#d0cabd" stroke-dasharray="none"/>
+    <line x1="235" y1="240" x2="235" y2="132" stroke="#d0cabd" stroke-opacity="0.7"/><text x="235" y="114.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">JAN</text><line x1="235" y1="240" x2="289" y2="146.5" stroke="#d0cabd" stroke-opacity="0.7"/><text x="299.5" y="131.8" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">FEV</text><line x1="235" y1="240" x2="328.5" y2="186" stroke="#d0cabd" stroke-opacity="0.7"/><text x="346.7" y="179" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">MAR</text><line x1="235" y1="240" x2="343" y2="240" stroke="#d0cabd" stroke-opacity="0.7"/><text x="364" y="243.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">ABR</text><line x1="235" y1="240" x2="328.5" y2="294" stroke="#d0cabd" stroke-opacity="0.7"/><text x="346.7" y="308" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">MAI</text><line x1="235" y1="240" x2="289" y2="333.5" stroke="#d0cabd" stroke-opacity="0.7"/><text x="299.5" y="355.2" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">JUN</text><line x1="235" y1="240" x2="235" y2="348" stroke="#d0cabd" stroke-opacity="0.7"/><text x="235" y="372.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">JUL</text><line x1="235" y1="240" x2="181" y2="333.5" stroke="#d0cabd" stroke-opacity="0.7"/><text x="170.5" y="355.2" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">AGO</text><line x1="235" y1="240" x2="141.5" y2="294" stroke="#d0cabd" stroke-opacity="0.7"/><text x="123.3" y="308" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">SET</text><line x1="235" y1="240" x2="127" y2="240" stroke="#d0cabd" stroke-opacity="0.7"/><text x="106" y="243.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">OUT</text><line x1="235" y1="240" x2="141.5" y2="186" stroke="#d0cabd" stroke-opacity="0.7"/><text x="123.3" y="179" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#0b5cad" font-weight="700">NOV</text><line x1="235" y1="240" x2="181" y2="146.5" stroke="#d0cabd" stroke-opacity="0.7"/><text x="170.5" y="131.8" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1" fill="#575e70" font-weight="400">DEZ</text>
+    <path class="orbit-fill" d="M235 220.6 C238.2 220.6,241.9 221.5,244.7 223.2 C247.5 224.8,246.2 227.5,251.8 230.3 C257.4 233.1,270.8 232.4,278.4 240 C286 247.6,302.4 272.2,297.4 276 C292.4 279.9,258.7 265.8,248.3 263.1 C237.9 260.3,238.8 260.5,235 259.4 C231.2 258.4,234.6 254.7,225.3 256.8 C215.9 259,190.8 275.3,178.8 272.5 C166.8 269.7,159.5 254.4,153.3 240 C147.1 225.6,129.5 188.8,141.5 186 C153.5 183.2,209.7 217.4,225.3 223.2 C240.9 228.9,231.8 220.6,235 220.6 Z" fill="#0b5cad" fill-opacity="0.11"/>
+    <path class="orbit-path" d="M235 220.6 C238.2 220.6,241.9 221.5,244.7 223.2 C247.5 224.8,246.2 227.5,251.8 230.3 C257.4 233.1,270.8 232.4,278.4 240 C286 247.6,302.4 272.2,297.4 276 C292.4 279.9,258.7 265.8,248.3 263.1 C237.9 260.3,238.8 260.5,235 259.4 C231.2 258.4,234.6 254.7,225.3 256.8 C215.9 259,190.8 275.3,178.8 272.5 C166.8 269.7,159.5 254.4,153.3 240 C147.1 225.6,129.5 188.8,141.5 186 C153.5 183.2,209.7 217.4,225.3 223.2 C240.9 228.9,231.8 220.6,235 220.6 Z" fill="none" stroke="#0b5cad" stroke-width="2" stroke-linejoin="round"/>
+    <g transform="translate(141.5, 186)">
+      <circle class="beacon-ping" cx="0" cy="0" r="5" fill="none" stroke="#0b5cad" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="4" fill="#0b5cad"/>
+    </g>
+    <text x="235" y="406" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10" letter-spacing="2" fill="#575e70">ÓRBITA · CONTRIBUIÇÕES POR MÊS</text>
+
+    <!-- Cards numéricos -->
+    
+    <g class="card-in" style="animation-delay:0.15s">
+      <rect x="470" y="86" width="218" height="104" rx="6" fill="#eae5da"/>
+      <path d="M470 96V86H480M678 86H688V96M470 180V190H480M678 190H688V180" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.55"/>
+      <text x="486" y="110" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.6" fill="#575e70">TEMPO DE MISSÃO</text>
+      <text x="486" y="152" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-weight="300" font-size="31" fill="#12141b">2</text>
+      <text x="486" y="174" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.3" fill="#0b5cad">ANOS NO GITHUB</text>
+    </g>
+    <g class="card-in" style="animation-delay:0.23s">
+      <rect x="704" y="86" width="218" height="104" rx="6" fill="#eae5da"/>
+      <path d="M704 96V86H714M912 86H922V96M704 180V190H714M912 190H922V180" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.55"/>
+      <text x="720" y="110" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.6" fill="#575e70">DISTÂNCIA</text>
+      <text x="720" y="152" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-weight="300" font-size="31" fill="#12141b">117</text>
+      <text x="720" y="174" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.3" fill="#0b5cad">CONTRIBUIÇÕES · 12M</text>
+    </g>
+    <g class="card-in" style="animation-delay:0.31s">
+      <rect x="938" y="86" width="218" height="104" rx="6" fill="#eae5da"/>
+      <path d="M938 96V86H948M1146 86H1156V96M938 180V190H948M1146 190H1156V180" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.55"/>
+      <text x="954" y="110" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.6" fill="#575e70">DIAS EM ÓRBITA</text>
+      <text x="954" y="152" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-weight="300" font-size="31" fill="#12141b">31</text>
+      <text x="954" y="174" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.3" fill="#0b5cad">DIAS ATIVOS</text>
+    </g>
+    <g class="card-in" style="animation-delay:0.39s">
+      <rect x="470" y="204" width="218" height="104" rx="6" fill="#eae5da"/>
+      <path d="M470 214V204H480M678 204H688V214M470 298V308H480M678 308H688V298" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.55"/>
+      <text x="486" y="228" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.6" fill="#575e70">MAIOR SEQUÊNCIA</text>
+      <text x="486" y="270" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-weight="300" font-size="31" fill="#12141b">4</text>
+      <text x="486" y="292" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.3" fill="#0b5cad">DIAS SEGUIDOS</text>
+    </g>
+    <g class="card-in" style="animation-delay:0.47s">
+      <rect x="704" y="204" width="218" height="104" rx="6" fill="#eae5da"/>
+      <path d="M704 214V204H714M912 204H922V214M704 298V308H714M912 308H922V298" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.55"/>
+      <text x="720" y="228" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.6" fill="#575e70">REPOSITÓRIOS</text>
+      <text x="720" y="270" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-weight="300" font-size="31" fill="#12141b">11</text>
+      <text x="720" y="292" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.3" fill="#0b5cad">MUNDOS CRIADOS</text>
+    </g>
+    <g class="card-in" style="animation-delay:0.55s">
+      <rect x="938" y="204" width="218" height="104" rx="6" fill="#eae5da"/>
+      <path d="M938 214V204H948M1146 204H1156V214M938 298V308H948M1146 308H1156V298" fill="none" stroke="#0b5cad" stroke-width="1.3" stroke-opacity="0.55"/>
+      <text x="954" y="228" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.6" fill="#575e70">COMMITS TOTAIS</text>
+      <text x="954" y="270" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-weight="300" font-size="31" fill="#12141b">69</text>
+      <text x="954" y="292" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="9.5" letter-spacing="1.3" fill="#0b5cad">HISTÓRICO GERAL</text>
+    </g>
+
+    <!-- Composição espectral -->
+    <text x="470" y="346" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing="2" fill="#575e70">COMPOSIÇÃO ESPECTRAL</text>
+    <rect x="470" y="358" width="686" height="10" rx="5" fill="#eae5da"/>
+    <g clip-path="url(#spec-clip)">
+      <g class="spec-bar"><rect x="470" y="358" width="244.3" height="10" fill="#0b5cad"/><rect x="714.3" y="358" width="208" height="10" fill="#0284c7"/><rect x="922.3" y="358" width="104.5" height="10" fill="#4f46e5"/><rect x="1026.8" y="358" width="69.8" height="10" fill="#b45309"/><rect x="1096.5" y="358" width="59.5" height="10" fill="#475569"/></g>
+    </g>
+    
+      <circle cx="474" cy="384" r="3.5" fill="#0b5cad"/>
+      <text x="484" y="388" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing="1.2" fill="#575e70">JAVASCRIPT 36%</text>
+      <circle cx="611.2" cy="384" r="3.5" fill="#0284c7"/>
+      <text x="621.2" y="388" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing="1.2" fill="#575e70">PYTHON 30%</text>
+      <circle cx="748.4" cy="384" r="3.5" fill="#4f46e5"/>
+      <text x="758.4" y="388" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing="1.2" fill="#575e70">DART 15%</text>
+      <circle cx="885.6" cy="384" r="3.5" fill="#b45309"/>
+      <text x="895.6" y="388" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing="1.2" fill="#575e70">CSS 10%</text>
+      <circle cx="1022.8" cy="384" r="3.5" fill="#475569"/>
+      <text x="1032.8" y="388" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="10.5" letter-spacing="1.2" fill="#575e70">PHP 9%</text>
+
+    <!-- Varredura HUD inicial -->
+    <g class="scan" opacity="0">
+      <rect x="-70" y="14" width="70" height="412" fill="url(#scan-trail)"/>
+      <rect x="0" y="14" width="1.5" height="412" fill="#0b5cad"/>
+    </g>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="439" rx="14" fill="none" stroke="#d0cabd"/>
+</svg>

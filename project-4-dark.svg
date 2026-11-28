@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="590" height="195" viewBox="0 0 590 195" role="img" aria-label="EcoMap Brasil — Mobile: Aplicativo Android do EcoMap Brasil construído em equipe para monitoramento e rotas sustentáveis.">
+  <style>
+    .proj-in { animation: rise .85s cubic-bezier(0.16, 1, 0.3, 1) 0.34s backwards; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+  <defs>
+    <clipPath id="proj-clip"><rect width="590" height="195" rx="12"/></clipPath>
+  </defs>
+  <g clip-path="url(#proj-clip)">
+    <rect width="590" height="195" fill="#070911"/>
+    <path d="M10 26V10H26M564 10H580V26M10 169V185H26M564 185H580V169" fill="none" stroke="#7dd3fc" stroke-width="1.3" stroke-opacity="0.78"/>
+    <g class="proj-in">
+      <circle cx="32" cy="34" r="3.5" fill="#ffae4c"/>
+      <text x="44" y="38" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#ffae4c">MSN-04</text>
+      <path d="M548 38 L558 28 M550 28 H558 V36" fill="none" stroke="#7dd3fc" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="28" y="72" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f6f2ea">EcoMap Brasil — Mobile</text>
+      <text x="28" y="100" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" fill="#8a94ad">Aplicativo Android do EcoMap Brasil construído em</text>
+      <text x="28" y="120" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" fill="#8a94ad">equipe para monitoramento e rotas sustentáveis.</text>
+      <line x1="28" y1="146" x2="562" y2="146" stroke="#1a2234"/>
+      <text x="28" y="170" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11" letter-spacing="1.6" fill="#7dd3fc">FLUTTER · DART · MOBILE</text>
+    </g>
+  </g>
+  <rect x="0.5" y="0.5" width="589" height="194" rx="12" fill="none" stroke="#1a2234"/>
+</svg>

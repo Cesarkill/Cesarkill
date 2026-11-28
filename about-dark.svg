@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="250" viewBox="0 0 1200 250" role="img" aria-label="Sobre mim: Cesar Giacomino, desenvolvedor web e estudante de Desenvolvimento de Software Multiplataforma na Fatec Matão (4º semestre).">
+  <style>
+    .about-in { animation: rise .9s cubic-bezier(0.16, 1, 0.3, 1) .12s backwards; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+  <defs>
+    <clipPath id="about-frame"><rect width="1200" height="250" rx="14"/></clipPath>
+  </defs>
+  <g clip-path="url(#about-frame)">
+    <rect width="1200" height="250" fill="#070911"/>
+    <path d="M14 34V14H34M1166 14H1186V34M14 216V236H34M1166 236H1186V216" fill="none" stroke="#7dd3fc" stroke-width="1.3" stroke-opacity="0.85"/>
+    <text x="38" y="46" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" letter-spacing="3" fill="#7dd3fc">SOBRE MIM // PERFIL</text>
+    <text x="1162" y="46" text-anchor="end" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" letter-spacing="2" fill="#8a94ad">HORIZONTE II · @CESARKILL</text>
+    <line x1="38" y1="62" x2="1162" y2="62" stroke="#1a2234"/>
+
+    <g class="about-in">
+      <text x="38" y="100" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#f6f2ea">Cesar Giacomino</text>
+      <text x="1162" y="99" text-anchor="end" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#ffae4c">DESENVOLVEDOR WEB &amp; FULL-STACK</text>
+
+      <text x="38" y="132" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="14.5" fill="#8a94ad">Olá! Sou <tspan fill="#f6f2ea" font-weight="600">Cesar Giacomino</tspan>, desenvolvedor web e estudante de <tspan fill="#7dd3fc" font-weight="600">Desenvolvimento de Software</tspan></text>
+      <text x="38" y="156" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="14.5" fill="#8a94ad"><tspan fill="#7dd3fc" font-weight="600">Multiplataforma</tspan> na <tspan fill="#f6f2ea" font-weight="600">Fatec Matão</tspan> (4º semestre). Construo aplicações web com <tspan fill="#f6f2ea">React, Next.js,</tspan></text>
+      <text x="38" y="180" font-family="'Segoe UI', 'Helvetica Neue', ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="14.5" fill="#8a94ad"><tspan fill="#f6f2ea">Firebase e Supabase</tspan>, além de apps mobile com <tspan fill="#f6f2ea">Flutter</tspan> — atuando em equipe na <tspan fill="#7dd3fc">ecomap-devs</tspan>.</text>
+
+      <line x1="38" y1="198" x2="1162" y2="198" stroke="#1a2234"/>
+      <text x="38" y="224" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="11" letter-spacing="1.5" fill="#7dd3fc">FATEC MATÃO · DSM (4º SEMESTRE)   ·   ABERTO A ESTÁGIO, FREELA E OPEN SOURCE</text>
+    </g>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="249" rx="14" fill="none" stroke="#1a2234"/>
+</svg>
